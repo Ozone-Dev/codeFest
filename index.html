@@ -18,7 +18,7 @@
           <div class="popup-box login-form">
               <h2>Login with GitHub</h2>
               <button class="exit-button" onclick="closePopupWindow()"><i class="fa-solid fa-x"></i></button>
-              <button id="github-login" onclick={signInWithPopup} class="button-modern"><i class="fa-solid fa-github"></i>Login with GitHub</button>
+              <button id="github-login" class="button-modern"><i class="fa-solid fa-github"></i>Login with GitHub</button>
           </div>
       </div>
       <div id="user-info" style="display:none;">
@@ -50,23 +50,10 @@
       <button id="submit-btn" type="submit">Submit Code</button>
     </form>
   </div>
-<script>
-import{
-  GithubAuthProvider,
-  signInWithPopup,
-  getAuth
-} from 'firebase/auth';
-import { auth } from './firebase';
 
-const githubSignUp = () =>{
-  signInWithPopup(auth, githubSignUp).then((Response)=> {
-    console.log(Response.user);
-  })
-}
-</script>
-  <script src="/script.js"></script>
-  <script src="/firebase.js"></script>
+  <script src="/firebase-config.js"></script>
   <script src="/auth.js"></script>
+  <script src="/script.js"></script>
 </body>
 
 </html>

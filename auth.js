@@ -1,9 +1,32 @@
-import { auth, GithubAuthProvider, signInWithPopup, signOut } from './firebase-config.js';
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCM0wHWsNMXFi4LifegT1FgveE3ZXqITqI",
+    authDomain: "codefest-76404.firebaseapp.com",
+    projectId: "codefest-76404",
+    storageBucket: "codefest-76404.appspot.com",
+    messagingSenderId: "813056506838",
+    appId: "1:813056506838:web:3183d1e6d53eb2a212c277",
+    measurementId: "G-M2D7G8P1XB"
+  
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// GitHub provider setup
+const provider = new GithubAuthProvider();
 
 document.getElementById('github-login').addEventListener('click', () => {
-    const provider = new GithubAuthProvider();
+    console.log("GitHub login button clicked"); // Log when button is clicked
     signInWithPopup(auth, provider)
         .then((result) => {
+            console.log("GitHub sign-in successful"); // Log when sign-in is successful
             const user = result.user;
             document.getElementById('popupOverlay').style.display = 'none';
             document.getElementById('user-info').style.display = 'flex';
@@ -11,18 +34,19 @@ document.getElementById('github-login').addEventListener('click', () => {
             document.getElementById('user-name').textContent = user.displayName;
         })
         .catch((error) => {
-            console.error("Error during login:", error);
+            console.error("Error during login:", error); // Log any errors
         });
 });
 
 document.getElementById('logout').addEventListener('click', () => {
     signOut(auth)
         .then(() => {
+            console.log("User signed out"); // Log when sign-out is successful
             document.getElementById('github-login').style.display = 'block';
             document.getElementById('user-info').style.display = 'none';
         })
         .catch((error) => {
-            console.error("Error during logout:", error);
+            console.error("Error during logout:", error); // Log any errors
         });
 });
 
@@ -55,3 +79,5 @@ function togglePopup() {
 function closePopupWindow() {
     document.getElementById('popupOverlay').classList.remove('show');
 }
+
+export { auth, db, GithubAuthProvider, signInWithPopup, signOut, onAuthStateChanged };
